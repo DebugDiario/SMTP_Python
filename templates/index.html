@@ -43,7 +43,17 @@
         .table-responsive {
             overflow-x: auto;
         }
-        /* Estilo para o widget do GitHub */
+        /* Estilo para o botão de atualizar */
+        .refresh-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .refresh-btn .btn {
+            font-size: 16px;
+            padding: 10px 15px;
+        }
         .github-widget {
             background-color: #333;
             color: #fff;
@@ -127,6 +137,13 @@
     </div>
 </div>
 
+<!-- Botão de atualizar -->
+<div class="refresh-btn">
+    <button class="btn btn-primary" onclick="window.location.reload();">
+        <i class="fas fa-sync-alt"></i> Atualizar
+    </button>
+</div>
+
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -166,7 +183,7 @@
 
     // Exibir mensagem no modal
     function viewMessage(id) {
-        const messages = {{ messages|tojson }};
+        const messages = {{ messages|tojson }}; 
         const message = messages.find(m => m.id === id);
 
         if (message) {
