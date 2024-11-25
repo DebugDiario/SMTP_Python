@@ -43,6 +43,31 @@
         .table-responsive {
             overflow-x: auto;
         }
+        /* Estilo para o widget do GitHub */
+        .github-widget {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .github-widget a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        .github-widget a:hover {
+            color: #0d6efd;
+        }
+        .github-widget i {
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
@@ -109,7 +134,6 @@
 <script>
     // Função para decodificar assuntos MIME
     function decodeMime(encodedSubject) {
-        // Expressão regular para identificar o formato MIME
         const mimeRegex = /=\?([^?]+)\?([BQ])\?([^?]+)\?=/i;
 
         const match = mimeRegex.exec(encodedSubject);
@@ -119,22 +143,18 @@
             const encodedText = match[3];
 
             if (encoding.toUpperCase() === 'B') {
-                // Decodificar Base64
                 return decodeURIComponent(escape(atob(encodedText)));
             } else if (encoding.toUpperCase() === 'Q') {
-                // Decodificar Quoted-Printable
                 return encodedText
                     .replace(/_/g, ' ')
                     .replace(/=([0-9A-F]{2})/gi, (match, hex) => String.fromCharCode(parseInt(hex, 16)));
             }
         }
-        // Retorna o assunto original se não estiver codificado
         return encodedSubject;
     }
 
     // Decodificar os assuntos na tabela ao carregar a página
     $(document).ready(function () {
-        // Verifica e decodifica os assuntos na tabela
         $('td').each(function () {
             const originalText = $(this).text();
             if (originalText.startsWith('=?')) {
@@ -146,14 +166,11 @@
 
     // Exibir mensagem no modal
     function viewMessage(id) {
-        const messages = {{ messages|tojson }};  // Assumindo que 'messages' é uma lista de objetos.
+        const messages = {{ messages|tojson }};
         const message = messages.find(m => m.id === id);
 
         if (message) {
-            // Decodificar o assunto, se necessário
             const decodedSubject = decodeMime(message.subject);
-
-            // Atualizar o modal com a mensagem decodificada
             $('#messageModalLabel').text(decodedSubject || 'Sem Assunto');
             $('#messageContent').html(`
                 <p><strong>De:</strong> ${message.from}</p>
@@ -213,44 +230,13 @@
     }
 </script>
 
-
-<script>
-    // Função para decodificar assuntos MIME
-    function decodeMime(encodedSubject) {
-        // Expressão regular para identificar o formato MIME
-        const mimeRegex = /=\?([^?]+)\?([BQ])\?([^?]+)\?=/i;
-
-        const match = mimeRegex.exec(encodedSubject);
-        if (match) {
-            const charset = match[1];
-            const encoding = match[2];
-            const encodedText = match[3];
-
-            if (encoding.toUpperCase() === 'B') {
-                // Decodificar Base64
-                return decodeURIComponent(escape(atob(encodedText)));
-            } else if (encoding.toUpperCase() === 'Q') {
-                // Decodificar Quoted-Printable
-                return encodedText
-                    .replace(/_/g, ' ')
-                    .replace(/=([0-9A-F]{2})/gi, (match, hex) => String.fromCharCode(parseInt(hex, 16)));
-            }
-        }
-        // Retorna o assunto original se não estiver codificado
-        return encodedSubject;
-    }
-
-    // Decodificar os assuntos na tabela ao carregar a página
-    $(document).ready(function () {
-        $('td').each(function () {
-            const originalText = $(this).text();
-            if (originalText.startsWith('=?')) {
-                const decodedText = decodeMime(originalText);
-                $(this).text(decodedText);
-            }
-        });
-    });
-</script>
+<!-- Widget do GitHub -->
+<div class="github-widget">
+    <i class="fab fa-github"></i>
+    <a href="https://github.com/DebugDiario/SMTP_Python/" target="_blank">
+        DebugDiario - Projeto SMTP_Python
+    </a>
+</div>
 
 </body>
 </html>
