@@ -110,11 +110,25 @@ def delete_message():
     if 'logged_in' not in session:
         return jsonify({'error': 'Unauthorized'}), 401
 
-    message_id = request.json.get('id')
-    global received_messages
-    received_messages = [msg for msg in received_messages if msg['id'] != message_id]
-    save_messages_to_json()
-    return jsonify({'message': 'Mensagem excluída com sucesso'}), 200
+    try:
+        message_id = request.json.get('id')
+        if not message_id:
+            return jsonify({'error': 'ID da mensagem não fornecido'}), 400
+
+        global received_messages
+        message_exists = any(msg['id'] == message_id for msg in received_messages)
+
+        if not message_exists:
+            return jsonify({'error': 'Mensagem não encontrada'}), 404
+
+        # Filtrar mensagens e salvar
+        received_messages = [msg for msg in received_messages if msg['id'] != message_id]
+        save_messages_to_json()
+
+        return jsonify({'message': 'Mensagem excluída com sucesso'}), 200
+    except Exception as e:
+        print(f"Erro ao excluir mensagem: {e}")
+        return jsonify({'error': 'Erro interno ao excluir a mensagem'}), 500
 
 
 @app.route('/logout')
