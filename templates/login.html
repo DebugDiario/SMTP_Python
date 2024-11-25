@@ -5,13 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Login</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .table {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .modal-header {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+        .modal-title {
+            font-weight: bold;
+        }
+        .btn-info {
+            color: white;
+        }
+        .btn-info:hover {
+            background-color: #0c5adb;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        /* Estilo para o widget do GitHub */
+        .github-widget {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .github-widget a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        .github-widget a:hover {
+            color: #0d6efd;
+        }
+        .github-widget i {
+            font-size: 24px;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-header text-center">Login</div>
+            <div class="card  shadow-lg">
+                <div class="card-header bg-dark text-white text-center">Login</div>
                 <div class="card-body">
                     {% if error %}
                         <div class="alert alert-danger">{{ error }}</div>
@@ -25,12 +87,26 @@
                             <label for="password" class="form-label">Senha</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                        <button type="submit" class="btn btn-dark w-100">Entrar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Widget de segurança -->
+    <div class="github-widget">
+        <i class="fab fa-github"></i>
+        <a href="https://github.com/DebugDiario/SMTP_Python/" target="_blank">
+            DebugDiario - Projeto SMTP_Python
+        </a>
+    </div>
+
 </div>
+
+<!-- Scripts -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
