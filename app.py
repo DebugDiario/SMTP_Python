@@ -85,6 +85,15 @@ def start_smtp_server():
 
 # Rotas do Flask
 
+# Adicionando a rota para buscar as mensagens em JSON
+@app.route('/api/messages', methods=['GET'])
+def get_messages():
+    if 'logged_in' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    return jsonify(received_messages), 200
+
+
 @app.route('/')
 def index():
     if 'logged_in' not in session:
