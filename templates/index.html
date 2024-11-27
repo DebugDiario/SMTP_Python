@@ -9,49 +9,76 @@
     <title>Inbox - Mensagens Recebidas</title>
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f5f7fa;
             font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .table {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
             overflow: hidden;
-            background-color: white;
+            background-color: #fff;
+            margin-top: 20px;
         }
         .table-hover tbody tr:hover {
-            background-color: #f1f1f1;
+            background-color: #f9f9f9;
+            transform: scale(1.02);
+            transition: transform 0.2s;
         }
-        .modal-header {
-            background-color: #0d6efd;
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table th {
+            background-color: #007bff;
             color: #fff;
+            font-weight: 600;
         }
-        .modal-title {
-            font-weight: bold;
+        .table tbody td {
+            color: #555;
         }
         .btn-info {
-            color: white;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
         }
         .btn-info:hover {
-            background-color: #0c5adb;
+            background-color: #0056b3;
         }
         .btn-danger {
             background-color: #dc3545;
+            color: #fff;
+            border-radius: 5px;
         }
         .btn-danger:hover {
             background-color: #c82333;
         }
-        .table-responsive {
-            overflow-x: auto;
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: 2px solid #0056b3;
+        }
+        .modal-body {
+            padding: 20px;
+            font-size: 1rem;
         }
         .refresh-btn {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .refresh-btn .btn {
-            font-size: 16px;
-            padding: 10px 15px;
+            font-size: 18px;
+            padding: 12px 16px;
+            border-radius: 6px;
         }
         .github-widget {
             background-color: #333;
@@ -72,42 +99,40 @@
             margin-left: 10px;
         }
         .github-widget a:hover {
-            color: #0d6efd;
+            color: #007bff;
         }
         .github-widget i {
             font-size: 24px;
         }
-    
+
         /* Ajustes responsivos para o modal */
         .modal-dialog {
-            max-width: 90%;  /* Garante que o modal ocupe no máximo 90% da largura da tela */
+            max-width: 80%;  /* Garante que o modal ocupe no máximo 80% da largura da tela */
             margin: 30px auto; /* Centraliza o modal */
         }
-    
+
         .modal-body {
             max-height: 70vh; /* Limita a altura do corpo do modal */
             overflow-y: auto; /* Adiciona barra de rolagem se necessário */
         }
-    
-        /* Para telas pequenas, ajusta o tamanho do modal */
+
         @media (max-width: 576px) {
             .modal-dialog {
                 max-width: 95%; /* Modal ocupa 95% da largura em telas pequenas */
             }
         }
     </style>
-    
 </head>
 <body>
 <div class="container mt-5">
     <div class="text-center mb-4">
-        <h1 class="display-5">📬 Inbox - Mensagens Recebidas</h1>
-        <p class="text-muted">Gerencie e visualize suas mensagens com facilidade.</p>
+        <h1 class="display-4 text-primary">📬 Inbox - Mensagens Recebidas</h1>
+        <p class="text-muted">Gerencie suas mensagens com facilidade e eficiência.</p>
     </div>
 
     <div class="table-responsive">
         <table class="table table-hover">
-            <thead class="table-dark">
+            <thead>
             <tr>
                 <th>De</th>
                 <th>Assunto</th>
@@ -284,7 +309,6 @@
         });
     }
 </script>
-
 
 <!-- Widget do GitHub -->
 <div class="github-widget">
