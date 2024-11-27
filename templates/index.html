@@ -43,7 +43,6 @@
         .table-responsive {
             overflow-x: auto;
         }
-        /* Estilo para o botão de atualizar */
         .refresh-btn {
             position: fixed;
             top: 20px;
@@ -78,7 +77,26 @@
         .github-widget i {
             font-size: 24px;
         }
+    
+        /* Ajustes responsivos para o modal */
+        .modal-dialog {
+            max-width: 90%;  /* Garante que o modal ocupe no máximo 90% da largura da tela */
+            margin: 30px auto; /* Centraliza o modal */
+        }
+    
+        .modal-body {
+            max-height: 70vh; /* Limita a altura do corpo do modal */
+            overflow-y: auto; /* Adiciona barra de rolagem se necessário */
+        }
+    
+        /* Para telas pequenas, ajusta o tamanho do modal */
+        @media (max-width: 576px) {
+            .modal-dialog {
+                max-width: 95%; /* Modal ocupa 95% da largura em telas pequenas */
+            }
+        }
     </style>
+    
 </head>
 <body>
 <div class="container mt-5">
@@ -148,6 +166,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     // Função para decodificar assuntos MIME
     function decodeMime(encodedSubject) {
@@ -170,6 +189,21 @@
         return encodedSubject;
     }
 
+    // Função para formatar URLs no conteúdo da mensagem
+    function formatUrls(content) {
+        // Expressão regular para identificar URLs que começam com http:// ou https://
+        const urlRegex = /(https?:\/\/[^\s<>"']+)/g;
+
+        // Substitui as URLs por links HTML clicáveis, mas evita duplicação
+        return content.replace(urlRegex, function(url) {
+            // Se a URL não estiver já formatada como um link HTML
+            if (!url.startsWith('<a href="')) {
+                return `<a href="${url}" target="_blank" class="text-decoration-none text-primary">${url}</a>`;
+            }
+            return url;
+        });
+    }
+
     // Decodificar os assuntos na tabela ao carregar a página
     $(document).ready(function () {
         $('td').each(function () {
@@ -189,11 +223,15 @@
         if (message) {
             const decodedSubject = decodeMime(message.subject);
             $('#messageModalLabel').text(decodedSubject || 'Sem Assunto');
+            
+            // Formatar o corpo da mensagem antes de exibir
+            const formattedBody = formatUrls(message.body || 'Sem conteúdo');
+            
             $('#messageContent').html(`
                 <p><strong>De:</strong> ${message.from}</p>
                 <p><strong>Para:</strong> ${message.to.join(', ')}</p>
                 <hr>
-                <p>${message.body || 'Sem conteúdo'}</p>
+                <p>${formattedBody}</p>
             `);
             new bootstrap.Modal(document.getElementById('messageModal')).show();
         } else {
@@ -246,6 +284,7 @@
         });
     }
 </script>
+
 
 <!-- Widget do GitHub -->
 <div class="github-widget">
